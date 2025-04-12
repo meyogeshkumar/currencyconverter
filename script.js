@@ -5,12 +5,16 @@ var h3 = document.querySelector(".h3");
 var h2 = document.querySelector(".h2");
 fetch("https://api.frankfurter.app/currencies")
   .then((res) => {
+   
     return res.json();
   })
 
   .then((res) => {
     return display(res);
-  });
+  })
+  .catch((error)=>{
+    h3.innerHTML = error.message + " network issue" 
+  })
 
 function display(res) {
   let curr = Object.entries(res);
@@ -30,8 +34,8 @@ btn.addEventListener("click", () => {
   curr1 == "" || curr2 == ""
     ? (h2.innerHTML = "pls select country")
     : (h2.innerHTML = "");
-  if (curr1 == curr2) {
-    h3.textContent = "Same counrty so not process OR";
+   if (curr1 == curr2) {
+    h3.textContent = "Same counrty so not process";
   } else {
     currency(curr1, curr2, currvalue);
   }
@@ -53,4 +57,11 @@ function currency(curr1, curr2, currvalue) {
       console.log(a);
       document.querySelector(".result").value = a;
     });
+}
+
+function remove(){
+  sel[0].value = ""
+  sel[1].value = ""
+  document.querySelector(".result").value = "";
+  input1.value =""
 }
